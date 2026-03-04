@@ -1,45 +1,57 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 interface FormSubmission {
-  readonly name: string
-  readonly email: string
-  readonly message: string
-  readonly subject?: string
+  readonly name: string;
+  readonly email: string;
+  readonly message: string;
+  readonly subject?: string;
 }
 
 function isValidSubmission(data: unknown): data is FormSubmission {
-  if (typeof data !== 'object' || data === null) return false
-  const obj = data as Record<string, unknown>
+  if (typeof data !== "object" || data === null) return false;
+  const obj = data as Record<string, unknown>;
   return (
-    typeof obj.name === 'string' &&
+    typeof obj.name === "string" &&
     obj.name.length > 0 &&
-    typeof obj.email === 'string' &&
-    obj.email.includes('@') &&
-    typeof obj.message === 'string' &&
+    typeof obj.email === "string" &&
+    obj.email.includes("@") &&
+    typeof obj.message === "string" &&
     obj.message.length > 0
-  )
+  );
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const body: unknown = await request.json()
+    const body: unknown = await request.json();
 
     if (!isValidSubmission(body)) {
       return NextResponse.json(
-        { success: false, error: 'Invalid form submission. Required: name, email, message.' },
-        { status: 400 }
-      )
+        {
+          success: false,
+          error: "Invalid form submission. Required: name, email, message.",
+        },
+        { status: 400 },
+      );
     }
 
-    const toAddress = process.env.NOTIFICATION_EMAIL ?? 'cd.lane@icloud.com'
+    if (!resend) {
+      return NextResponse.json(
+        { success: false, error: "Email service not configured" },
+        { status: 503 },
+      );
+    }
+
+    const toAddress = process.env.NOTIFICATION_EMAIL ?? "cd.lane@icloud.com";
 
     await resend.emails.send({
-      from: 'PURRFECT AI <onboarding@resend.dev>',
+      from: "PURRFECT AI <onboarding@resend.dev>",
       to: toAddress,
-      subject: `[PURRFECT] New Inquiry: ${body.subject ?? 'Contact Form'}`,
+      subject: `[PURRFECT] New Inquiry: ${body.subject ?? "Contact Form"}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -71,10 +83,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                 <div class="label">Email</div>
                 <div class="value"><a href="mailto:${body.email}">${body.email}</a></div>
               </div>
-              ${body.subject ? `<div class="field"><div class="label">Subject</div><div class="value">${body.subject}</div></div>` : ''}
+              ${body.subject ? `<div class="field"><div class="label">Subject</div><div class="value">${body.subject}</div></div>` : ""}
               <div class="field">
                 <div class="label">Message</div>
-                <div class="value">${body.message.replace(/\n/g, '<br/>')}</div>
+                <div class="value">${body.message.replace(/\n/g, "<br/>")}</div>
               </div>
             </div>
             <div class="footer">
@@ -84,17 +96,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         </body>
         </html>
       `,
-    })
+    });
 
     return NextResponse.json({
       success: true,
-      message: 'Form submission received and notification sent.',
-    })
+      message: "Form submission received and notification sent.",
+    });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
       { success: false, error: message },
-      { status: 500 }
-    )
+      { status: 500 },
+    );
   }
 }
