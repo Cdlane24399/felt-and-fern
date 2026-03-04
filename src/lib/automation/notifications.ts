@@ -1,11 +1,17 @@
-import { Resend } from 'resend'
-import type { AutomationTask, DailyBriefingData, WeeklyReportMetrics } from './types'
+import { Resend } from "resend";
+import type {
+  AutomationTask,
+  DailyBriefingData,
+  WeeklyReportMetrics,
+} from "./types";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
-const FROM_ADDRESS = 'PURRFECT AI <onboarding@resend.dev>'
-const TO_ADDRESS = process.env.NOTIFICATION_EMAIL ?? 'cd.lane@icloud.com'
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+const FROM_ADDRESS = "PURRFECT AI <onboarding@resend.dev>";
+const TO_ADDRESS = process.env.NOTIFICATION_EMAIL ?? "cd.lane@icloud.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 function baseStyles(): string {
   return `
@@ -35,7 +41,7 @@ function baseStyles(): string {
       .badge-draft { background: #fff3e0; color: #e65100; }
       .badge-human { background: #fce4ec; color: #c62828; }
     </style>
-  `
+  `;
 }
 
 function wrapEmail(content: string): string {
@@ -57,27 +63,27 @@ function wrapEmail(content: string): string {
       </div>
     </body>
     </html>
-  `
+  `;
 }
 
-function taskBadge(type: AutomationTask['type']): string {
+function taskBadge(type: AutomationTask["type"]): string {
   const labels: Record<string, string> = {
-    ai_autonomous: 'AI Auto',
-    ai_draft: 'AI Draft',
-    human_required: 'Human',
-    human_blocked: 'Blocked',
-  }
+    ai_autonomous: "AI Auto",
+    ai_draft: "AI Draft",
+    human_required: "Human",
+    human_blocked: "Blocked",
+  };
   const classes: Record<string, string> = {
-    ai_autonomous: 'badge-auto',
-    ai_draft: 'badge-draft',
-    human_required: 'badge-human',
-    human_blocked: 'badge-human',
-  }
-  return `<span class="badge ${classes[type] ?? ''}">${labels[type] ?? type}</span>`
+    ai_autonomous: "badge-auto",
+    ai_draft: "badge-draft",
+    human_required: "badge-human",
+    human_blocked: "badge-human",
+  };
+  return `<span class="badge ${classes[type] ?? ""}">${labels[type] ?? type}</span>`;
 }
 
 export async function sendHumanActionRequired(
-  task: AutomationTask
+  task: AutomationTask,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const html = wrapEmail(`
@@ -87,36 +93,38 @@ export async function sendHumanActionRequired(
         <div class="task-item blocked">
           <div class="task-title">${taskBadge(task.type)} ${task.title}</div>
           <div class="task-desc">${task.description}</div>
-          ${task.reasonHumanRequired ? `<div class="task-desc" style="margin-top: 8px;"><strong>Why:</strong> ${task.reasonHumanRequired}</div>` : ''}
-          ${task.suggestedAction ? `<div class="task-desc"><strong>Suggested action:</strong> ${task.suggestedAction}</div>` : ''}
+          ${task.reasonHumanRequired ? `<div class="task-desc" style="margin-top: 8px;"><strong>Why:</strong> ${task.reasonHumanRequired}</div>` : ""}
+          ${task.suggestedAction ? `<div class="task-desc"><strong>Suggested action:</strong> ${task.suggestedAction}</div>` : ""}
         </div>
         <a href="${SITE_URL}/admin" class="btn">View in Dashboard</a>
       </div>
-    `)
+    `);
 
+    if (!resend)
+      return { success: false, error: "RESEND_API_KEY not configured" };
     await resend.emails.send({
       from: FROM_ADDRESS,
       to: TO_ADDRESS,
       subject: `[PURRFECT] Action Required: ${task.title}`,
       html,
-    })
+    });
 
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    return { success: false, error: message }
+    const message = error instanceof Error ? error.message : String(error);
+    return { success: false, error: message };
   }
 }
 
 export async function sendDailyBriefing(
-  data: DailyBriefingData
+  data: DailyBriefingData,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const renderTaskList = (
       tasks: readonly AutomationTask[],
-      className: string
+      className: string,
     ): string => {
-      if (tasks.length === 0) return '<p style="color: #999;">None</p>'
+      if (tasks.length === 0) return '<p style="color: #999;">None</p>';
       return tasks
         .map(
           (t) => `
@@ -124,71 +132,73 @@ export async function sendDailyBriefing(
             <div class="task-title">${taskBadge(t.type)} ${t.title}</div>
             <div class="task-desc">${t.description}</div>
           </div>
-        `
+        `,
         )
-        .join('')
-    }
+        .join("");
+    };
 
     const html = wrapEmail(`
       <div class="section">
         <h2>Daily Briefing</h2>
-        <p>Here's your PURRFECT automation summary for ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}:</p>
+        <p>Here's your PURRFECT automation summary for ${new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}:</p>
       </div>
 
       <div class="section">
         <h2>Completed (${data.completedTasks.length})</h2>
-        ${renderTaskList(data.completedTasks, 'completed')}
+        ${renderTaskList(data.completedTasks, "completed")}
       </div>
 
       <div class="section">
         <h2>Needs Review (${data.reviewTasks.length})</h2>
-        ${renderTaskList(data.reviewTasks, 'review')}
+        ${renderTaskList(data.reviewTasks, "review")}
       </div>
 
       <div class="section">
         <h2>Blocked (${data.blockedTasks.length})</h2>
-        ${renderTaskList(data.blockedTasks, 'blocked')}
+        ${renderTaskList(data.blockedTasks, "blocked")}
       </div>
 
       <div class="section">
         <h2>Upcoming (${data.upcomingTasks.length})</h2>
-        ${renderTaskList(data.upcomingTasks, '')}
+        ${renderTaskList(data.upcomingTasks, "")}
       </div>
 
       <a href="${SITE_URL}/admin" class="btn">Open Dashboard</a>
-    `)
+    `);
 
+    if (!resend)
+      return { success: false, error: "RESEND_API_KEY not configured" };
     await resend.emails.send({
       from: FROM_ADDRESS,
       to: TO_ADDRESS,
-      subject: `[PURRFECT] Daily Briefing - ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,
+      subject: `[PURRFECT] Daily Briefing - ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}`,
       html,
-    })
+    });
 
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    return { success: false, error: message }
+    const message = error instanceof Error ? error.message : String(error);
+    return { success: false, error: message };
   }
 }
 
 export async function sendWeeklyReport(
   allTasks: readonly AutomationTask[],
-  metrics: WeeklyReportMetrics
+  metrics: WeeklyReportMetrics,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const recentCompleted = allTasks
-      .filter((t) => t.status === 'completed')
-      .slice(-10)
+      .filter((t) => t.status === "completed")
+      .slice(-10);
 
     const blocked = allTasks.filter(
-      (t) => t.status === 'needs_human' || t.status === 'notified'
-    )
+      (t) => t.status === "needs_human" || t.status === "notified",
+    );
 
     const html = wrapEmail(`
       <div class="section">
         <h2>Weekly Progress Report</h2>
-        <p>Week ending ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+        <p>Week ending ${new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
       </div>
 
       <div class="section" style="text-align: center;">
@@ -222,10 +232,10 @@ export async function sendWeeklyReport(
           ? `
         <div class="section">
           <h2>Recently Completed</h2>
-          ${recentCompleted.map((t) => `<div class="task-item completed"><div class="task-title">${t.title}</div></div>`).join('')}
+          ${recentCompleted.map((t) => `<div class="task-item completed"><div class="task-title">${t.title}</div></div>`).join("")}
         </div>
       `
-          : ''
+          : ""
       }
 
       ${
@@ -233,52 +243,54 @@ export async function sendWeeklyReport(
           ? `
         <div class="section">
           <h2>Needs Attention</h2>
-          ${blocked.map((t) => `<div class="task-item blocked"><div class="task-title">${t.title}</div><div class="task-desc">${t.reasonHumanRequired ?? t.description}</div></div>`).join('')}
+          ${blocked.map((t) => `<div class="task-item blocked"><div class="task-title">${t.title}</div><div class="task-desc">${t.reasonHumanRequired ?? t.description}</div></div>`).join("")}
         </div>
       `
-          : ''
+          : ""
       }
 
       <a href="${SITE_URL}/admin" class="btn">Open Dashboard</a>
-    `)
+    `);
 
+    if (!resend)
+      return { success: false, error: "RESEND_API_KEY not configured" };
     await resend.emails.send({
       from: FROM_ADDRESS,
       to: TO_ADDRESS,
       subject: `[PURRFECT] Weekly Report - ${metrics.completionRate}% Complete`,
       html,
-    })
+    });
 
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    return { success: false, error: message }
+    const message = error instanceof Error ? error.message : String(error);
+    return { success: false, error: message };
   }
 }
 
 export async function sendSystemOnlineEmail(
-  seedTasks: readonly AutomationTask[]
+  seedTasks: readonly AutomationTask[],
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const aiAutoTasks = seedTasks.filter((t) => t.type === 'ai_autonomous')
-    const aiDraftTasks = seedTasks.filter((t) => t.type === 'ai_draft')
+    const aiAutoTasks = seedTasks.filter((t) => t.type === "ai_autonomous");
+    const aiDraftTasks = seedTasks.filter((t) => t.type === "ai_draft");
     const humanTasks = seedTasks.filter(
-      (t) => t.type === 'human_required' || t.type === 'human_blocked'
-    )
+      (t) => t.type === "human_required" || t.type === "human_blocked",
+    );
 
     const renderGroup = (
       tasks: readonly AutomationTask[],
       label: string,
-      className: string
+      className: string,
     ): string => {
-      if (tasks.length === 0) return ''
+      if (tasks.length === 0) return "";
       return `
         <div class="section">
           <h2>${label} (${tasks.length})</h2>
-          ${tasks.map((t) => `<div class="task-item ${className}"><div class="task-title">${t.title}</div><div class="task-desc">${t.description}</div></div>`).join('')}
+          ${tasks.map((t) => `<div class="task-item ${className}"><div class="task-title">${t.title}</div><div class="task-desc">${t.description}</div></div>`).join("")}
         </div>
-      `
-    }
+      `;
+    };
 
     const html = wrapEmail(`
       <div class="section">
@@ -286,9 +298,9 @@ export async function sendSystemOnlineEmail(
         <p>The PURRFECT automation system is now configured and running. Here's an overview of everything that's been set up:</p>
       </div>
 
-      ${renderGroup(aiAutoTasks, 'AI Autonomous Tasks', 'completed')}
-      ${renderGroup(aiDraftTasks, 'AI Draft Tasks (Need Review)', 'review')}
-      ${renderGroup(humanTasks, 'Human Required Tasks', 'blocked')}
+      ${renderGroup(aiAutoTasks, "AI Autonomous Tasks", "completed")}
+      ${renderGroup(aiDraftTasks, "AI Draft Tasks (Need Review)", "review")}
+      ${renderGroup(humanTasks, "Human Required Tasks", "blocked")}
 
       <div class="section">
         <h2>Cron Schedule</h2>
@@ -322,18 +334,20 @@ export async function sendSystemOnlineEmail(
       </div>
 
       <a href="${SITE_URL}/admin" class="btn">Open Admin Dashboard</a>
-    `)
+    `);
 
+    if (!resend)
+      return { success: false, error: "RESEND_API_KEY not configured" };
     await resend.emails.send({
       from: FROM_ADDRESS,
       to: TO_ADDRESS,
-      subject: '[PURRFECT] Automation System Online',
+      subject: "[PURRFECT] Automation System Online",
       html,
-    })
+    });
 
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    return { success: false, error: message }
+    const message = error instanceof Error ? error.message : String(error);
+    return { success: false, error: message };
   }
 }
