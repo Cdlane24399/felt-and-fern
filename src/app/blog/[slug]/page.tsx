@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 const quoteText = trimmedBlock.replace(/^> /gm, "");
                 return (
                   <blockquote key={i} className="my-10 border-l-2 border-stone-300 pl-6 py-2 italic text-lg text-stone-600 md:text-xl md:leading-relaxed">
-                    "{quoteText}"
+                    &ldquo;{quoteText}&rdquo;
                   </blockquote>
                 );
               }

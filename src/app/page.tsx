@@ -199,7 +199,7 @@ const FeaturedProducts = () => {
                 <span className="italic font-extralight text-stone-500">Perfectly crafted to start.</span>
               </h2>
               <p className="mt-4 text-stone-500 leading-relaxed">
-                Rather than overwhelming you with endless choices, we've spent the last year obsessing over the essentials. Four products designed to satisfy your cat's instinctual needs: scratching, hiding, hunting, and euphoria. 
+                Rather than overwhelming you with endless choices, we&apos;ve spent the last year obsessing over the essentials. Four products designed to satisfy your cat&apos;s instinctual needs: scratching, hiding, hunting, and euphoria. 
               </p>
             </div>
             <Link
@@ -359,7 +359,7 @@ const Philosophy = () => (
       </ScrollReveal>
       <ScrollReveal delay={0.2}>
         <p className="text-2xl font-light leading-relaxed text-stone-200 md:text-3xl lg:text-4xl lg:leading-[1.4]">
-          We're starting our journey with four intentional pieces. Because cats deserve beautiful, sustainable products made from
+          We&apos;re starting our journey with four intentional pieces. Because cats deserve beautiful, sustainable products made from
           natural materials &mdash; <span className="italic text-stone-400">kind to them and to the planet.</span>
         </p>
       </ScrollReveal>

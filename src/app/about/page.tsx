@@ -22,7 +22,7 @@ export default function AboutPage() {
               not hidden away.
             </h1>
             <p className="mt-8 text-lg leading-relaxed text-stone-600 md:text-xl max-w-2xl">
-              PURRFECT was born from a simple observation: while our homes were becoming more minimal and natural, our cats' accessories remained stuck in a world of neon plastics and synthetic fabrics. We set out to change that.
+              PURRFECT was born from a simple observation: while our homes were becoming more minimal and natural, our cats&apos; accessories remained stuck in a world of neon plastics and synthetic fabrics. We set out to change that.
             </p>
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 Everything was made of cheap plastic, covered in synthetic carpeting, or dyed in aggressive, unnatural colors. Why did providing for our cat mean compromising the aesthetic of our carefully curated home?
               </p>
               <blockquote className="border-l-2 border-stone-300 pl-6 py-2 my-8 italic text-xl text-stone-800">
-                "We shouldn't have to choose between making our cats happy and maintaining a beautiful living space."
+                &ldquo;We shouldn&apos;t have to choose between making our cats happy and maintaining a beautiful living space.&rdquo;
               </blockquote>
               <p>
                 We started sketching. We researched sustainable materials. We partnered with artisans who understood working with raw linen, organic cotton, and natural birch. The result is PURRFECT: a collection of four intentional pieces designed to seamlessly blend into modern interiors while satisfying feline instincts.
@@ -107,7 +107,7 @@ export default function AboutPage() {
                 We draw inspiration from Scandinavian and Japanese design traditions — where simplicity is not the absence of complexity, but the result of careful refinement. Every curve, material choice, and detail in a PURRFECT product serves a purpose.
               </p>
               <p>
-                We design for the "Foundational Four" behaviors of cats:
+                We design for the &ldquo;Foundational Four&rdquo; behaviors of cats:
               </p>
               <ul className="list-disc list-inside space-y-3 mt-4 text-stone-800">
                 <li><strong>Scratching:</strong> Satisfied by the ergonomic Wave Scratcher.</li>
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 <li><strong>Euphoria:</strong> Stimulated by our Organic Catnip Pouch.</li>
               </ul>
               <p className="mt-6">
-                We remove everything that doesn't need to be there, leaving products that are honest, functional, and beautiful.
+                We remove everything that doesn&apos;t need to be there, leaving products that are honest, functional, and beautiful.
               </p>
             </div>
           </div>

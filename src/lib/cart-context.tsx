@@ -77,7 +77,7 @@ export const CartProvider = ({
       })
       .filter((item): item is CartItem => item !== null);
     
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(hydratedItems);
     setHydrated(true);
   }, [allProducts]);
