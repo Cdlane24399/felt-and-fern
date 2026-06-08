@@ -55,7 +55,13 @@ export default function Materials() {
           <Reveal delay={0.06} className="md:col-span-2">
             <div className="group h-full overflow-hidden rounded-[2rem] bg-white/45 p-2 ring-1 ring-bark/10 soft-lift">
               <div className="relative h-full min-h-[180px] overflow-hidden rounded-[1.6rem]">
-                <img src={burrowImg} alt="Stonewashed linen tunnel" className="img-zoom absolute inset-0 h-full w-full object-cover" />
+                <img
+                  src={burrowImg}
+                  alt="Stonewashed linen tunnel"
+                  loading="lazy"
+                  decoding="async"
+                  className="img-zoom absolute inset-0 h-full w-full object-cover"
+                />
                 <div className="absolute bottom-3 left-3 rounded-full bg-cream/85 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-bark backdrop-blur-md">
                   Stonewashed linen
                 </div>
@@ -96,7 +102,13 @@ export default function Materials() {
           <Reveal delay={0.1} className="md:col-span-2">
             <div className="group h-full overflow-hidden rounded-[2rem] bg-white/45 p-2 ring-1 ring-bark/10 soft-lift">
               <div className="relative h-full min-h-[160px] overflow-hidden rounded-[1.6rem]">
-                <img src={blissImg} alt="Kraft catnip pouch" className="img-zoom absolute inset-0 h-full w-full object-cover" />
+                <img
+                  src={blissImg}
+                  alt="Kraft catnip pouch"
+                  loading="lazy"
+                  decoding="async"
+                  className="img-zoom absolute inset-0 h-full w-full object-cover"
+                />
                 <div className="absolute bottom-3 left-3 rounded-full bg-cream/85 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-bark backdrop-blur-md">
                   Plastic-free
                 </div>

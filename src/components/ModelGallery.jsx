@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Reveal, Icon } from './ui.jsx'
-import { products, formatPrice } from '../data/products.js'
-import { useCart } from '../lib/cart.jsx'
+import LazyModelViewer from './LazyModelViewer.jsx'
+import { products, modelLoaders, formatPrice } from '../data/products.js'
+import { useCartActions } from '../lib/cart.jsx'
 
 const modeled = products.filter((p) => p.model)
 
@@ -14,7 +15,7 @@ const ORBIT = {
 
 export default function ModelGallery() {
   const [active, setActive] = useState('prey')
-  const { add } = useCart()
+  const { add } = useCartActions()
   const p = modeled.find((m) => m.id === active)
 
   return (
@@ -77,8 +78,8 @@ export default function ModelGallery() {
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute inset-0"
                   >
-                    <model-viewer
-                      src={p.model}
+                    <LazyModelViewer
+                      srcLoader={modelLoaders[p.model]}
                       alt={`Interactive 3D model of ${p.name}`}
                       camera-controls
                       auto-rotate
@@ -91,7 +92,11 @@ export default function ModelGallery() {
                       camera-orbit={ORBIT[active]}
                       field-of-view="30deg"
                       style={{ width: '100%', height: '100%' }}
-                    />
+                    >
+                      <div className="flex h-full w-full items-center justify-center text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-bark/50">
+                        Loading 3D view
+                      </div>
+                    </LazyModelViewer>
                   </motion.div>
                 </AnimatePresence>
 

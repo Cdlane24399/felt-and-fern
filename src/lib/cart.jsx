@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 
-const CartContext = createContext(null)
+const CartStateContext = createContext(null)
+const CartActionsContext = createContext(null)
 
 const STORAGE_KEY = 'purrfect-cart-v1'
 
@@ -28,9 +29,11 @@ function reducer(state, action) {
     case 'inc':
       return state.map((l) => (l.id === action.id ? { ...l, qty: Math.min(l.qty + 1, 99) } : l))
     case 'dec':
-      return state
-        .map((l) => (l.id === action.id ? { ...l, qty: l.qty - 1 } : l))
-        .filter((l) => l.qty > 0)
+      return state.flatMap((l) => {
+        if (l.id !== action.id) return [l]
+        const qty = l.qty - 1
+        return qty > 0 ? [{ ...l, qty }] : []
+      })
     case 'remove':
       return state.filter((l) => l.id !== action.id)
     case 'clear':
@@ -53,34 +56,82 @@ export function CartProvider({ children }) {
     }
   }, [items])
 
-  const value = useMemo(() => {
-    const count = items.reduce((n, l) => n + l.qty, 0)
-    const subtotal = items.reduce((n, l) => n + l.qty * l.price, 0)
-    return {
+  const { count, subtotal } = useMemo(
+    () =>
+      items.reduce(
+        (acc, line) => ({
+          count: acc.count + line.qty,
+          subtotal: acc.subtotal + line.qty * line.price,
+        }),
+        { count: 0, subtotal: 0 },
+      ),
+    [items],
+  )
+
+  const openCart = useCallback(() => setOpen(true), [])
+  const closeCart = useCallback(() => setOpen(false), [])
+  const add = useCallback((item) => {
+    dispatch({ type: 'add', item })
+    setPulse((p) => p + 1)
+    setOpen(true)
+  }, [])
+  const inc = useCallback((id) => dispatch({ type: 'inc', id }), [])
+  const dec = useCallback((id) => dispatch({ type: 'dec', id }), [])
+  const remove = useCallback((id) => dispatch({ type: 'remove', id }), [])
+  const clear = useCallback(() => dispatch({ type: 'clear' }), [])
+
+  const state = useMemo(
+    () => ({
       items,
       count,
       subtotal,
       open,
       pulse,
-      openCart: () => setOpen(true),
-      closeCart: () => setOpen(false),
-      add: (item) => {
-        dispatch({ type: 'add', item })
-        setPulse((p) => p + 1)
-        setOpen(true)
-      },
-      inc: (id) => dispatch({ type: 'inc', id }),
-      dec: (id) => dispatch({ type: 'dec', id }),
-      remove: (id) => dispatch({ type: 'remove', id }),
-      clear: () => dispatch({ type: 'clear' }),
-    }
-  }, [items, open, pulse])
+    }),
+    [items, count, subtotal, open, pulse],
+  )
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+  const actions = useMemo(
+    () => ({
+      openCart,
+      closeCart,
+      add,
+      inc,
+      dec,
+      remove,
+      clear,
+    }),
+    [openCart, closeCart, add, inc, dec, remove, clear],
+  )
+
+  return (
+    <CartStateContext.Provider value={state}>
+      <CartActionsContext.Provider value={actions}>{children}</CartActionsContext.Provider>
+    </CartStateContext.Provider>
+  )
+}
+
+export function useCartState() {
+  const state = useContext(CartStateContext)
+  if (!state) throw new Error('useCartState must be used within CartProvider')
+  return state
+}
+
+export function useCartActions() {
+  const actions = useContext(CartActionsContext)
+  if (!actions) throw new Error('useCartActions must be used within CartProvider')
+  return actions
 }
 
 export function useCart() {
-  const ctx = useContext(CartContext)
-  if (!ctx) throw new Error('useCart must be used within CartProvider')
-  return ctx
+  const state = useCartState()
+  const actions = useCartActions()
+
+  return useMemo(
+    () => ({
+      ...state,
+      ...actions,
+    }),
+    [state, actions],
+  )
 }

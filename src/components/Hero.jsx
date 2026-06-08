@@ -41,8 +41,8 @@ export default function Hero() {
           muted
           loop
           playsInline
-          preload="auto"
-          fetchpriority="high"
+          preload="metadata"
+          fetchpriority="low"
           poster={arcImg}
         />
       </motion.div>

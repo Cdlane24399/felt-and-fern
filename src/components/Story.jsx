@@ -53,7 +53,13 @@ export default function Story() {
           <Reveal delay={0.15} className="relative">
             <div className="relative ml-auto w-[78%] rotate-[2.5deg] rounded-[1.8rem] bg-white/50 p-2 ring-1 ring-bark/10 soft-lift lg:w-full">
               <div className="overflow-hidden rounded-[1.4rem]">
-                <img src={preyImg} alt="The Prey knitted mouse" className="aspect-[4/5] w-full object-cover" />
+                <img
+                  src={preyImg}
+                  alt="The Prey knitted mouse"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/5] w-full object-cover"
+                />
               </div>
             </div>
             <div className="absolute -bottom-8 -left-2 w-[58%] -rotate-3 rounded-[1.4rem] bg-espresso p-5 text-cream soft-lift-lg lg:-left-10">

@@ -1,9 +1,9 @@
 import { Reveal, Icon } from './ui.jsx'
 import { sets, formatPrice } from '../data/products.js'
-import { useCart } from '../lib/cart.jsx'
+import { useCartActions } from '../lib/cart.jsx'
 
 export default function Sets() {
-  const { add } = useCart()
+  const { add } = useCartActions()
 
   return (
     <section id="sets" className="relative bg-canvas py-28 sm:py-36">

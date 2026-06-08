@@ -1,11 +1,12 @@
 import { Reveal, Button, Icon, Bezel } from './ui.jsx'
-import { products, formatPrice } from '../data/products.js'
-import { useCart } from '../lib/cart.jsx'
+import LazyModelViewer from './LazyModelViewer.jsx'
+import { products, modelLoaders, formatPrice } from '../data/products.js'
+import { useCartActions } from '../lib/cart.jsx'
 
 const arc = products.find((p) => p.id === 'arc')
 
 export default function Spotlight() {
-  const { add } = useCart()
+  const { add } = useCartActions()
 
   return (
     <section className="relative overflow-hidden bg-espresso py-24 text-cream sm:py-32">
@@ -20,8 +21,8 @@ export default function Spotlight() {
           <div className="relative">
             <div className="rounded-[2.4rem] bg-cream/5 p-2 ring-1 ring-cream/10">
               <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_50%_40%,#3a2d20,#241a12)]">
-                <model-viewer
-                  src={arc.model}
+                <LazyModelViewer
+                  srcLoader={modelLoaders[arc.model]}
                   alt="Interactive 3D model of The Arc cat scratcher"
                   camera-controls
                   auto-rotate
@@ -34,7 +35,11 @@ export default function Spotlight() {
                   camera-orbit="35deg 78deg 4.2m"
                   field-of-view="30deg"
                   style={{ width: '100%', height: '100%' }}
-                />
+                >
+                  <div className="flex h-full w-full items-center justify-center text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-cream/45">
+                    Loading 3D view
+                  </div>
+                </LazyModelViewer>
                 <div className="pointer-events-none absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-ink/40 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-cream/80 backdrop-blur-md">
                   <Icon.Rotate className="text-[14px]" /> Drag to explore
                 </div>

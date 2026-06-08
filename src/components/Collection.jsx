@@ -1,9 +1,9 @@
 import { Reveal, Icon } from './ui.jsx'
 import { products, formatPrice } from '../data/products.js'
-import { useCart } from '../lib/cart.jsx'
+import { useCartActions } from '../lib/cart.jsx'
 
 function ProductCard({ p, i }) {
-  const { add } = useCart()
+  const { add } = useCartActions()
   const onAdd = () =>
     add({ id: p.id, name: p.code, sub: p.name, price: p.price, image: p.image })
 

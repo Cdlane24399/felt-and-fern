@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { Icon } from './ui.jsx'
 import { useCart } from '../lib/cart.jsx'
@@ -33,8 +33,14 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { count, openCart, pulse } = useCart()
   const { scrollY } = useScroll()
+  const scrolledRef = useRef(false)
 
-  useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 40))
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const next = y > 40
+    if (scrolledRef.current === next) return
+    scrolledRef.current = next
+    setScrolled(next)
+  })
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''

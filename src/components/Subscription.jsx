@@ -1,9 +1,9 @@
 import { Reveal, Icon } from './ui.jsx'
 import { subscriptions, formatPrice } from '../data/products.js'
-import { useCart } from '../lib/cart.jsx'
+import { useCartActions } from '../lib/cart.jsx'
 
 export default function Subscription() {
-  const { add } = useCart()
+  const { add } = useCartActions()
 
   return (
     <section id="subscribe" className="relative py-28 sm:py-36">

@@ -7,9 +7,11 @@ import burrowImg from '../assets/products/the-burrow.jpeg'
 import preyImg from '../assets/products/the-prey.jpeg'
 import blissImg from '../assets/products/the-bliss.jpeg'
 
-import arcModel from '../assets/models/the-arc.glb'
-import burrowModel from '../assets/models/the-burrow.glb'
-import preyModel from '../assets/models/the-prey.glb'
+export const modelLoaders = {
+  arc: () => import('../assets/models/the-arc.glb?url'),
+  burrow: () => import('../assets/models/the-burrow.glb?url'),
+  prey: () => import('../assets/models/the-prey.glb?url'),
+}
 
 export const products = [
   {
@@ -25,7 +27,7 @@ export const products = [
       'Hand-knit from organic cotton with a hand-spun jute tail and a refillable catnip core. Weighted to skitter the way real prey moves.',
     materials: ['Organic cotton', 'Hand-spun jute', 'Refillable catnip'],
     image: preyImg,
-    model: preyModel,
+    model: 'prey',
     span: 'lg:col-span-7',
     tone: '#efe6d6',
   },
@@ -42,7 +44,7 @@ export const products = [
       'A single ribbon of steam-bent FSC birch wrapped in replaceable natural sisal. Engineered as furniture first — a lounge your cat happens to love to claw.',
     materials: ['FSC birch ply', 'Natural sisal', 'Replaceable panel'],
     image: arcImg,
-    model: arcModel,
+    model: 'arc',
     span: 'lg:col-span-5',
     tone: '#ece2d2',
   },
@@ -59,7 +61,7 @@ export const products = [
       'A stonewashed linen shell lined in soft recycled felt that folds flat in seconds. Ships with a felt mouse waiting at the far end.',
     materials: ['Stonewashed linen', 'Recycled felt', 'Felt mouse incl.'],
     image: burrowImg,
-    model: burrowModel,
+    model: 'burrow',
     span: 'lg:col-span-5',
     tone: '#eee6d8',
   },
