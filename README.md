@@ -1,18 +1,16 @@
-# PURRFECT — Storefront (Demo)
+# Felt & Fern — Storefront (Demo)
 
-A high-end, customer-facing demo storefront for **PURRFECT**, the minimalist cat-toy brand.
-Built to show off the four launch products with an AI-generated hero film, interactive 3D models,
+A high-end, customer-facing demo storefront for **Felt & Fern**, the minimalist cat-toy brand.
+Built to show off the four launch products with a branded hero film, interactive 3D models,
 and a working (mock) cart — using real pricing pulled from the internal docs.
 
 > This is a first-version demo. Cart + checkout are mocked client-side (no payment is taken).
 
 ## Highlights
 
-- **AI-generated hero video** — a full-bleed cinematic header. `src/assets/video/hero-arc.mp4` is
-  an **image-to-video** clip: a real product still (The Arc, `scripts/seed/the-arc-16x9.jpg`)
-  animated with a slow push-in via **xAI Grok Imagine Video 1.5** (`scripts/gen-hero-i2v.mjs`)
-  through the **Vercel AI Gateway**. An ambient text-to-video alternate lives in
-  `scripts/gen-video.mjs` → `hero-ambient.mp4`.
+- **Felt & Fern hero video** — a full-bleed cinematic header. `src/assets/video/hero-felt-fern.mp4`
+  carries the refreshed brand system and uses `src/assets/brand/hero-felt-fern-poster.jpg` as its
+  poster. The older AI Gateway generation scripts remain in `scripts/` for future video refreshes.
 - **Interactive 3D** — real product models (`<model-viewer>`) you can drag, spin and zoom
   (The Prey, The Arc, The Burrow) in the Spotlight + 3D gallery sections.
 - **Editorial-luxury design system** — Fraunces (display) + Plus Jakarta Sans (UI), warm
@@ -20,7 +18,7 @@ and a working (mock) cart — using real pricing pulled from the internal docs.
   spring-physics motion, and scroll-reveal choreography (Framer Motion).
 - **Working mock cart** — add/remove, quantity steppers, free-shipping progress, localStorage
   persistence, slide-in drawer, and an animated checkout success state.
-- **Real pricing from the docs** — the four SKUs (`progress.json`), the Good-Better-Best
+- **Real pricing from the docs** — the four launch SKUs, the Good-Better-Best
   curated sets, and the Fresh Play subscription tiers (`task-1.4-pricing-strategy`).
 
 ## Stack
@@ -59,7 +57,7 @@ Notes from building this:
 
 - Product photography + 3D GLBs are sourced from the parent project
   (`../progress-app/src/assets`, `../3d-assets`) and copied into `src/assets/`.
-- Logo: the "P with cat ear + tail" mark from the PURRFECT design system.
+- Logo: the Felt & Fern F&F botanical monogram in the nav, footer, and favicon.
 
 ## Structure
 

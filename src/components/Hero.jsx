@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Button, Icon } from './ui.jsx'
-import heroVideo from '../assets/video/hero-arc.mp4'
-import arcImg from '../assets/products/the-arc.jpeg'
+import heroVideo from '../assets/video/hero-felt-fern.mp4'
+import heroPoster from '../assets/brand/hero-felt-fern-poster.jpg'
 
 const word = {
   hidden: { opacity: 0, y: '110%' },
@@ -32,7 +32,7 @@ export default function Hero() {
 
   return (
     <section ref={ref} id="top" className="relative min-h-[100dvh] w-full overflow-hidden">
-      {/* full-bleed AI-generated product film */}
+      {/* full-bleed brand film */}
       <motion.div style={{ scale: videoScale }} className="absolute inset-0">
         <video
           className="h-full w-full object-cover"
@@ -43,7 +43,7 @@ export default function Hero() {
           playsInline
           preload="metadata"
           fetchpriority="low"
-          poster={arcImg}
+          poster={heroPoster}
         />
       </motion.div>
 
@@ -68,13 +68,13 @@ export default function Hero() {
           >
             <span className="eyebrow text-cream/85">
               <span className="h-1 w-1 rounded-full bg-sage" />
-              Modern enrichment · sustainably made
+              Felt &amp; Fern · Natural cat enrichment
             </span>
           </motion.div>
 
           <h1 className="max-w-[16ch] font-display text-[clamp(2.8rem,8.2vw,7.4rem)] font-light leading-[0.95] tracking-[-0.03em] text-cream [text-shadow:0_2px_40px_rgba(26,21,16,0.45)]">
             <Line i={0}>
-              Play, <span className="it text-clay">perfected</span>
+              Play, <span className="it text-clay">rooted</span>
             </Line>
             <Line i={1}>for the homes</Line>
             <Line i={2}>cats quietly rule.</Line>
@@ -87,8 +87,8 @@ export default function Hero() {
             className="mt-8 flex max-w-xl flex-col gap-7"
           >
             <p className="text-balance text-[15px] leading-relaxed text-cream/80 sm:text-base">
-              Thoughtfully engineered toys, furniture &amp; treats — crafted from natural materials
-              and designed to look as good in your home as they feel for your cat.
+              Thoughtfully engineered toys, scratchers &amp; hideaways, crafted from natural
+              materials and designed to sit quietly in beautiful homes.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <Button as="a" href="#shop">Shop the collection</Button>
@@ -111,7 +111,7 @@ export default function Hero() {
             className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-cream/15 pt-6 text-[11px] uppercase tracking-[0.16em] text-cream/65"
           >
             <span className="flex items-center gap-2 text-cream/85">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage" /> On screen · The Arc
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage" /> On screen · Felt &amp; Fern studio cut
             </span>
             <span className="flex items-center gap-2"><Icon.Truck className="text-[15px]" /> Carbon-neutral shipping</span>
             <span className="hidden items-center gap-2 sm:flex"><Icon.Shield className="text-[15px]" /> Safety-tested · ASTM F963</span>

@@ -1,4 +1,4 @@
-// Product catalogue. Pricing and specs are drawn from the PURRFECT docs:
+// Product catalogue. Pricing and specs are drawn from the Felt & Fern launch docs:
 // progress.json (the four launch SKUs) and task-1.4 pricing strategy
 // (Good-Better-Best sets + Fresh Play subscription).
 
@@ -18,7 +18,7 @@ export const products = [
     id: 'prey',
     code: 'The Prey',
     name: 'Knitted Mouse Toy',
-    sku: 'PRF-TOY-001',
+    sku: 'FF-TOY-MOUSE-001',
     category: 'Toys',
     price: 16,
     tagline: 'Handcrafted play, naturally.',
@@ -35,7 +35,7 @@ export const products = [
     id: 'arc',
     code: 'The Arc',
     name: 'Wave Cat Scratcher',
-    sku: 'PRF-FRN-001',
+    sku: 'FF-SCRATCH-ARC-001',
     category: 'Furniture',
     price: 89,
     tagline: 'Sculpture meets scratch.',
@@ -52,7 +52,7 @@ export const products = [
     id: 'burrow',
     code: 'The Burrow',
     name: 'Collapsible Cat Tunnel',
-    sku: 'PRF-ACC-001',
+    sku: 'FF-HOUSE-BURROW-001',
     category: 'Accessories',
     price: 48,
     tagline: 'A cozy hideaway for curious cats.',
@@ -69,7 +69,7 @@ export const products = [
     id: 'bliss',
     code: 'The Bliss',
     name: 'Organic Catnip Pouch',
-    sku: 'PRF-TRT-001',
+    sku: 'FF-CATNIP-BLISS-001',
     category: 'Treats',
     price: 12,
     tagline: 'Pure bliss, organically grown.',
@@ -91,13 +91,13 @@ export const sets = [
     tier: 'Good',
     name: 'The Minimalist Paw',
     price: 19.99,
-    desc: 'Three core toys, thoughtfully simple. The gentlest way to meet PURRFECT.',
+    desc: 'Three core toys, thoughtfully simple. The gentlest way to meet Felt & Fern.',
     includes: ['3 core toys', 'Non-toxic materials', 'Gift-ready sleeve'],
   },
   {
-    id: 'purrfect-play',
+    id: 'felt-fern-play',
     tier: 'Better',
-    name: 'The Purrfect Play Set',
+    name: 'The Felt & Fern Play Set',
     price: 34.99,
     desc: 'Our flagship. Five toys and an interactive wand for solo and shared play.',
     includes: ['5 toys + 1 wand', 'Eco-friendly build', 'Enrichment guide'],
@@ -106,7 +106,7 @@ export const sets = [
   {
     id: 'ultimate',
     tier: 'Best',
-    name: 'The Ultimate Feline Experience',
+    name: 'The Full-Fern Experience',
     price: 49.99,
     desc: 'Everything, beautifully boxed. Seven toys, organic catnip, premium packaging.',
     includes: ['7 toys + catnip', 'Interactive toy', 'Premium gift box'],

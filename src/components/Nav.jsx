@@ -17,13 +17,23 @@ function Wordmark({ className = '', tone = 'ink' }) {
     <a
       href="#top"
       className={`flex items-center gap-2.5 transition-colors duration-500 ${color} ${className}`}
-      aria-label="PURRFECT home"
+      aria-label="Felt & Fern home"
     >
-      <svg viewBox="520 250 190 280" className="h-6 w-auto" fill="currentColor" aria-hidden>
-        <path d="M540 300 L540 520 L572 520 L572 440 L620 440 C668 440 700 408 700 368 C700 328 668 296 620 296 L572 296 L572 280 L588 264 L556 264 L540 280 Z M572 328 L612 328 C644 328 668 340 668 368 C668 396 644 408 612 408 L572 408 L572 328 Z" />
-        <path d="M652 296 L668 264 L700 296 C684 296 668 296 652 296 Z" />
+      <svg viewBox="0 0 72 72" className="h-7 w-auto" fill="none" aria-hidden>
+        <circle cx="36" cy="36" r="31" stroke="currentColor" strokeWidth="3" />
+        <path
+          d="M23 48V22h17M23 35h14M44 50V22M44 35c8 0 13-4 14-11"
+          stroke="currentColor"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M50 27c5 1 9 5 10 10-6 0-10-4-10-10Z"
+          fill="currentColor"
+        />
       </svg>
-      <span className="text-[13px] font-semibold uppercase tracking-[0.36em]">Purrfect</span>
+      <span className="text-[13px] font-semibold uppercase tracking-[0.24em]">Felt &amp; Fern</span>
     </a>
   )
 }

@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 const CartStateContext = createContext(null)
 const CartActionsContext = createContext(null)
 
-const STORAGE_KEY = 'purrfect-cart-v1'
+const STORAGE_KEY = 'felt-fern-cart-v1'
 
 function load() {
   try {

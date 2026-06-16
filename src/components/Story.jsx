@@ -21,9 +21,9 @@ export default function Story() {
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-bark/85">
-              For design-conscious cat owners who see their pets as family, PURRFECT is the modern
-              cat brand delivering minimalist, enrichment-focused play that looks as good on your
-              floor as it feels under their paws. Every object is engineered around how cats
+              For design-conscious cat owners who see their pets as family, Felt &amp; Fern is the
+              modern cat brand delivering minimalist, enrichment-focused play that looks as good on
+              your floor as it feels under their paws. Every object is engineered around how cats
               actually move, crafted from sustainable materials, and made to be refilled and
               repaired rather than replaced.
             </p>
