@@ -111,7 +111,7 @@ export default function Hero() {
             className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-cream/15 pt-6 text-[11px] uppercase tracking-[0.16em] text-cream/65"
           >
             <span className="flex items-center gap-2 text-cream/85">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage" /> On screen · Felt &amp; Fern studio cut
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage" /> On screen · Confident cat walk
             </span>
             <span className="flex items-center gap-2"><Icon.Truck className="text-[15px]" /> Carbon-neutral shipping</span>
             <span className="hidden items-center gap-2 sm:flex"><Icon.Shield className="text-[15px]" /> Safety-tested · ASTM F963</span>
